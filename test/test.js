@@ -50,25 +50,25 @@ describe("vending machine", () => {
     expect(machine.till.fiftyYen.count).to.equal(3);
   });
 
-  it.only("should have a press Button for Rows", () => {
+  it("should have a press Button for Rows", () => {
     let machine = new VendingMachine();
     machine.pressButtonRow("B");
     expect(machine.selectedRow).to.equal("B");
   });
 
-  it.only("should have a press Button for Columns", () => {
+  it("should have a press Button for Columns", () => {
     let machine = new VendingMachine();
     machine.pressButtonRow("A");
     machine.pressButtonColumn(1);
     expect(machine.selectedColumn).to.equal(1);
   });
 
-  it.only("should have an Inventory", () => {
+  it("should have an Inventory", () => {
     let machine = new VendingMachine();
     expect(Array.isArray(machine.inventory)).to.equal(true);
   });
 
-  it.only("should be able to decrease inventory of a Product", () => {
+  it("should be able to decrease inventory of a Product", () => {
     let machine = new VendingMachine();
     let hundredYen = { value: 100 };
     machine.insertCoin(hundredYen);
@@ -81,13 +81,52 @@ describe("vending machine", () => {
     expect(machine.inventory[1][2].count).to.equal(6);
   });
 
-  it.only("should be able to buy a Product", () => {
+  it("should be able to buy a Product", () => {
     let machine = new VendingMachine();
 
     machine.pressButtonRow("B");
     machine.pressButtonColumn(3);
 
     expect(machine.finalChoice).to.equal(machine.coffee);
+  });
+
+  it.only("should return an Error when there is no Inventory", () => {
+    let machine = new VendingMachine();
+    let hundredYen = { value: 100 };
+    machine.insertCoin(hundredYen);
+    machine.insertCoin(hundredYen);
+    machine.insertCoin(hundredYen);
+    machine.inventory[1][2].count = 0;
+    machine.pressButtonRow("B");
+    machine.pressButtonColumn(3);
+
+    expect(machine.inventory[1][2].count).to.equal(0);
+  });
+
+  it.only("should return an Error when there is not enough Balance", () => {
+    let machine = new VendingMachine();
+    let hundredYen = { value: 100 };
+    machine.insertCoin(hundredYen);
+    machine.insertCoin(hundredYen);
+    machine.pressButtonRow("B");
+    machine.pressButtonColumn(3);
+    machine.buyItem();
+
+    expect(machine.inventory[1][2].count).to.equal(6);
+  });
+
+  it.only("should reset the Balance and Log the change", () => {
+    let machine = new VendingMachine();
+    let hundredYen = { value: 100 };
+    machine.insertCoin(hundredYen);
+    machine.insertCoin(hundredYen);
+    machine.insertCoin(hundredYen);
+    machine.insertCoin(hundredYen);
+    machine.pressButtonRow("B");
+    machine.pressButtonColumn(3);
+    machine.buyItem();
+
+    expect(machine.balance).to.equal(0);
   });
 
   it("should accept valid coins", () => {

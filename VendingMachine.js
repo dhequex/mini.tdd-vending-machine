@@ -58,15 +58,18 @@ class VendingMachine {
     if (this.selectedColumn === 3) this.finalChoice = this.rowChoice[2];
     if (this.selectedColumn === 4) this.finalChoice = this.rowChoice[3];
     console.log(this.selectedColumn);
+    if (this.finalChoice.count < 1) console.log("Out of Stock");
   }
 
   buyItem() {
-    if (this.balance >= this.finalChoice.price) {
-      console.log(this.selectedRow + this.selectedColumn);
-      console.log("Here is your " + this.finalChoice.name);
-      this.finalChoice.count--;
-      this.balance--;
-    }
+    if (this.balance < this.finalChoice.price)
+      console.log("Insufficient Funds");
+
+    console.log(this.selectedRow + this.selectedColumn);
+    console.log("Here is your " + this.finalChoice.name);
+    this.finalChoice.count--;
+    console.log(this.balance - this.finalChoice.price);
+    this.balance = 0;
   }
 }
 
