@@ -18,6 +18,18 @@ class VendingMachine {
     };
     this.selectedRow = "A";
     this.selectedColumn = 1;
+    this.juice = { name: "Apple Juice", price: 350, count: 5 };
+    this.coffee = { name: "Juan Valdez", price: 250, count: 7 };
+    this.candy = { name: "Snickers", price: 100, count: 10 };
+    this.bakery = { name: "Croissant", price: 300, count: 5 };
+    this.inventory = [
+      [this.juice, this.juice, this.juice, this.juice],
+      [this.coffee, this.coffee, this.coffee, this.coffee],
+      [this.candy, this.candy, this.candy, this.candy],
+      [this.bakery, this.bakery, this.bakery, this.bakery],
+    ];
+    this.rowChoice;
+    this.finalChoice;
   }
 
   insertCoin(denomination) {
@@ -32,12 +44,29 @@ class VendingMachine {
 
   pressButtonRow(string) {
     this.selectedRow = string;
+    if (this.selectedRow === "A") this.rowChoice = this.inventory[0];
+    if (this.selectedRow === "B") this.rowChoice = this.inventory[1];
+    if (this.selectedRow === "C") this.rowChoice = this.inventory[2];
+    if (this.selectedRow === "D") this.rowChoice = this.inventory[3];
     console.log(this.selectedRow);
   }
 
   pressButtonColumn(number) {
     this.selectedColumn = number;
+    if (this.selectedColumn === 1) this.finalChoice = this.rowChoice[0];
+    if (this.selectedColumn === 2) this.finalChoice = this.rowChoice[1];
+    if (this.selectedColumn === 3) this.finalChoice = this.rowChoice[2];
+    if (this.selectedColumn === 4) this.finalChoice = this.rowChoice[3];
     console.log(this.selectedColumn);
+  }
+
+  buyItem() {
+    if (this.balance >= this.finalChoice.price) {
+      console.log(this.selectedRow + this.selectedColumn);
+      console.log("Here is your " + this.finalChoice.name);
+      this.finalChoice.count--;
+      this.balance--;
+    }
   }
 }
 

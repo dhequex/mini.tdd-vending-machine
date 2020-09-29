@@ -58,8 +58,36 @@ describe("vending machine", () => {
 
   it.only("should have a press Button for Columns", () => {
     let machine = new VendingMachine();
+    machine.pressButtonRow("A");
+    machine.pressButtonColumn(1);
+    expect(machine.selectedColumn).to.equal(1);
+  });
+
+  it.only("should have an Inventory", () => {
+    let machine = new VendingMachine();
+    expect(Array.isArray(machine.inventory)).to.equal(true);
+  });
+
+  it.only("should be able to decrease inventory of a Product", () => {
+    let machine = new VendingMachine();
+    let hundredYen = { value: 100 };
+    machine.insertCoin(hundredYen);
+    machine.insertCoin(hundredYen);
+    machine.insertCoin(hundredYen);
+    machine.pressButtonRow("B");
     machine.pressButtonColumn(3);
-    expect(machine.selectedColumn).to.equal(3);
+    machine.buyItem();
+
+    expect(machine.inventory[1][2].count).to.equal(6);
+  });
+
+  it.only("should be able to buy a Product", () => {
+    let machine = new VendingMachine();
+
+    machine.pressButtonRow("B");
+    machine.pressButtonColumn(3);
+
+    expect(machine.finalChoice).to.equal(machine.coffee);
   });
 
   it("should accept valid coins", () => {
