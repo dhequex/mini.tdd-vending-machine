@@ -27,11 +27,39 @@ describe("vending machine", () => {
     expect(typeof machine.selectedColumn).to.equal("number");
   });
 
-  it.only("should modify Balance after inserting coin", () => {
+  it("should modify Balance after inserting coin", () => {
     let machine = new VendingMachine();
-    let coin = { value: 50 };
-    machine.insertCoin(coin);
+    let fiftyYen = { value: 50 };
+    machine.insertCoin(fiftyYen);
     expect(machine.balance).to.equal(50);
+  });
+
+  it("should modify TILL after inserting coin", () => {
+    let machine = new VendingMachine();
+    let fiftyYen = { value: 50 };
+    machine.insertCoin(fiftyYen);
+    expect(machine.till.fiftyYen.count).to.equal(1);
+  });
+
+  it("should keep a count of Coins", () => {
+    let machine = new VendingMachine();
+    let fiftyYen = { value: 50 };
+    machine.insertCoin(fiftyYen);
+    machine.insertCoin(fiftyYen);
+    machine.insertCoin(fiftyYen);
+    expect(machine.till.fiftyYen.count).to.equal(3);
+  });
+
+  it.only("should have a press Button for Rows", () => {
+    let machine = new VendingMachine();
+    machine.pressButtonRow("B");
+    expect(machine.selectedRow).to.equal("B");
+  });
+
+  it.only("should have a press Button for Columns", () => {
+    let machine = new VendingMachine();
+    machine.pressButtonColumn(3);
+    expect(machine.selectedColumn).to.equal(3);
   });
 
   it("should accept valid coins", () => {

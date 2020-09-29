@@ -22,6 +22,22 @@ class VendingMachine {
 
   insertCoin(denomination) {
     this.balance += denomination.value;
+    if (denomination.value === 1) this.till.oneYen.count++;
+    if (denomination.value === 5) this.till.fiveYen.count++;
+    if (denomination.value === 10) this.till.tenYen.count++;
+    if (denomination.value === 50) this.till.fiftyYen.count++;
+    if (denomination.value === 100) this.till.hundredYen.count++;
+    if (denomination.value === 500) this.till.fiveHundredYen.count++;
+  }
+
+  pressButtonRow(string) {
+    this.selectedRow = string;
+    console.log(this.selectedRow);
+  }
+
+  pressButtonColumn(number) {
+    this.selectedColumn = number;
+    console.log(this.selectedColumn);
   }
 }
 
